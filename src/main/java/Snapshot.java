@@ -9,7 +9,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 /**
  *
- * @author brianna
+ * @author CBT
  */
 public class Snapshot {
     String hash;

@@ -6,11 +6,16 @@
 
 /**
  *
- * @author brianna
+ * @author CBT
  */
 public class Video {
     String hash;
     String testId;
+    
+    public Video(String hash, String testId) {
+        this.hash = hash;
+        this.testId = testId;
+    }
     
     public void getInfo() { //will decide on return type later
         //make request to base/videos/hash

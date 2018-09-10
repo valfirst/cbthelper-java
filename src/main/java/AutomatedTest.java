@@ -24,13 +24,13 @@ import org.json.JSONObject;
 
 /**
  *
- * @author brianna
+ * @author CBT
  */
 public class AutomatedTest {
     
     String testId;
     
-    public AutomatedTest(String testId) { //may change to int
+    public AutomatedTest(String testId) {
         this.testId = testId;
     }
     
@@ -91,42 +91,42 @@ public class AutomatedTest {
     
     public Snapshot[] getSnapshots() throws UnirestException {
         Snapshot[] snaps;
-        HttpResponse<JsonNode> response = Unirest.get(Builders.api + this.testId + "/snapshots")
+        HttpResponse<String> response = Unirest.get(Builders.api + this.testId + "/snapshots")
                 .basicAuth(Builders.username, Builders.authkey)
-                .asJson();
-        JSONObject results = response.getBody().getObject();
-        JSONArray results2 = results.getJSONArray("");
+                .asString();
+        JSONArray results = new JSONArray(response.getBody());
+        String hash;
+        snaps = new Snapshot[results.length()];
+        for(int i=0; i<results.length();i++) {
+            hash = results.getJSONObject(i).getString("hash");
+            snaps[i] = new Snapshot(hash, this.testId);
+        }
         return snaps;
     }
-    //saveAllSnapshots
-    //startRecordingVideo
-    //getVideos
-    //saveAllVideos
-    
-    
-    
-    
-    private void makeRequest(String requestMethod, String payload, String baseUrl) {
-	URL url;
-	String auth = "";
 
-        if (Builders.username != null && Builders.authkey != null) {
-            auth = "Basic " + Base64.encodeBase64String((Builders.username + ":" + Builders.authkey).getBytes());
+    public Video startRecordingVideo() throws UnirestException {
+        HttpResponse<JsonNode> response = Unirest.post(Builders.api + this.testId + "/videos")
+                .basicAuth(Builders.username, Builders.authkey).
+                asJson();
+        String hash = (String) response.getBody().getObject().get("hash");
+        Video video = new Video(hash, this.testId);
+        return video;
+    }
+    
+    public Video[] getVideos() throws UnirestException {
+        Video[] videos;
+        HttpResponse<String> response = Unirest.get(Builders.api + this.testId + "/videos")
+                .basicAuth(Builders.username, Builders.authkey)
+                .asString();
+        JSONArray results = new JSONArray(response.getBody());
+        String hash;
+        videos = new Video[results.length()];
+        for(int i=0; i<results.length();i++) {
+            hash = results.getJSONObject(i).getString("hash");
+            videos[i] = new Video(hash, this.testId);
         }
-        try {
-            url = new URL(baseUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(requestMethod);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", auth);
-            conn.setRequestProperty("Content-Type", "application/json");
-            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-            osw.write(payload);
-            osw.flush();
-            osw.close();
-            conn.getResponseMessage();
-        } catch (Exception e) {
-        	System.out.println(e.getMessage());
-        }
-	}
+        return videos;
+    }
+    //saveAllSnapshots
+    //saveAllVideos
 }
