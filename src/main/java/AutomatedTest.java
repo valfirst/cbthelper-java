@@ -18,8 +18,9 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import com.google.gson.Gson;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 
 /**
@@ -127,6 +128,41 @@ public class AutomatedTest {
         }
         return videos;
     }
-    //saveAllSnapshots
-    //saveAllVideos
+
+    public void saveAllSnapshots(String directory, String prefix, boolean useDescription) throws UnirestException {
+        //FileUtils.copyURLToFile(URL, File);
+        String filename;
+        int count = 0;
+        
+        //verify directory here
+        
+        Snapshot[] snaps = this.getSnapshots();
+        for (Snapshot snap : snaps) {
+            if(useDescription && snap.info.getObject().getString("description").equals("")) {
+                filename = snap.info.getObject().getString("description") + ".png";
+            } else {
+                filename = prefix + Integer.toString(count) + ".png";
+            }
+        //pass directory + filename via snap.saveLocally(combo);
+        count++;
+        }
+    }
+    
+    public void saveAllVideos(String directory, String prefix, boolean useDescription) throws UnirestException {
+        String filename;
+        int count = 0;
+        
+        //verify directory here
+        
+        Video[] videos = this.getVideos();
+        for (Video vid : videos) {
+            if(useDescription && vid.info.getObject().getString("description").equals("")) {
+                filename = vid.info.getObject().getString("description") + ".mp4";
+            } else {
+                filename = prefix + Integer.toString(count) + ".mp4";
+            }
+        //pass directory + filename via vid.saveLocally(combo);
+        count++;
+        }
+    }
 }

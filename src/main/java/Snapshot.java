@@ -14,14 +14,21 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 public class Snapshot {
     String hash;
     String testId;
+    JsonNode info;
     
-    public Snapshot(String hash, String testId) {
+    public Snapshot(String hash, String testId) throws UnirestException {
         this.hash = hash;
         this.testId = testId;
+        this.getInfo();
     }
     
-    public void getInfo() {
-        
+    private void getInfo() throws UnirestException {
+        HttpResponse<JsonNode> response = Unirest.get("http://crossbrowsertesting.com/api/v3/selenium/{seleniumTestId}/snapshots/{snapshotHash}")
+                .basicAuth(Builders.username, Builders.authkey)
+                .routeParam("seleniumTestId", this.testId)
+                .routeParam("snapshotHash", this.hash)
+                .asJson();
+        this.info = response.getBody();
     }
     
     public JsonNode setDescription(String description) throws UnirestException {

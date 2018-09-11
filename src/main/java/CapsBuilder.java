@@ -17,7 +17,6 @@ public class CapsBuilder {
     String api = "https://crossbrowsertesting.com/api/v3/selenium/";
     String hub = "http://hub.crossbrowsertesting.com:80/wd/hub";
 
-    //capsData = json? Is there a type for that?
     String platform, browser, width, height, name, version, resolution;
     boolean recordVideo, recordNetwork;
     
@@ -84,10 +83,10 @@ public class CapsBuilder {
     }
     
     public String bestOption(String options, String target) {
-        return "wah";
+        return "a";
     }
     
     public String choose() {
-        return "luigi";
+        return "b";
     }
 }
