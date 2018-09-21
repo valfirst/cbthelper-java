@@ -7,6 +7,12 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 /**
  *
  * @author CBT
@@ -42,8 +48,32 @@ public class Snapshot {
     }
     
     public void saveLocally(String location) { //error checking on filepath is important
+        String snap_url = this.info.getObject().getString("image");
+        //turn into URL
+        //SnapThread download = new SnapThread(snap_url, location);
+    } 
+}
+
+class SnapThread extends Thread {
+    private URL snap_url;
+    private File snap_file;
+    private Thread t;
+    SnapThread(URL snap_url, File snap_file) {
         
     }
+    @Override
+    public void run() {
+        try {
+            FileUtils.copyURLToFile(this.snap_url, this.snap_file);
+        } catch (IOException ex) {
+            Logger.getLogger(SnapThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
-    
+    @Override
+    public void start() {
+        System.out.println("Downloading snapshot from " + snap_url.toString());
+        t = new Thread(this);
+        t.start();
+    }
 }
