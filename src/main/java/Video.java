@@ -64,8 +64,8 @@ public class Video {
 }
     
 class VideoThread extends Thread {
-    private URL snap_url;
-    private File snap_file;
+    private URL video_url;
+    private File video_file;
     private Thread t;
     VideoThread(URL snap_url, File snap_file) {
         
@@ -73,7 +73,7 @@ class VideoThread extends Thread {
     @Override
     public void run() {
         try {
-            FileUtils.copyURLToFile(this.snap_url, this.snap_file);
+            FileUtils.copyURLToFile(this.video_url, this.video_file);
         } catch (IOException ex) {
             Logger.getLogger(SnapThread.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,7 +81,7 @@ class VideoThread extends Thread {
     
     @Override
     public void start() {
-        System.out.println("Downloading snapshot from " + snap_url.toString());
+        System.out.println("Downloading snapshot from " + video_url.toString());
         t = new Thread(this);
         t.start();
     }
