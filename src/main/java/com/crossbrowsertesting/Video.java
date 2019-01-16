@@ -1,3 +1,5 @@
+package com.crossbrowsertesting;
+
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;

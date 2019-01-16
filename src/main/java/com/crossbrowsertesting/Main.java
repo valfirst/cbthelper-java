@@ -1,9 +1,10 @@
+package com.crossbrowsertesting;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import org.junit.Test;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
@@ -13,22 +14,22 @@ import java.net.URL;
  * @author CBT
  */
 
-public class MainTest {
+public class Main {
     static String username = ""; // Your username
     static String authkey = "12345";  // Your authkey
     String testScore = "unset";
 
-    @Test
-    public void main() throws Exception{
-
-    	//Build the caps for our driver
-    	CapsBuilder capsBuilder = new CapsBuilder();
-    	capsBuilder.withPlatform("Windows 8").withBuild("1.0").withBrowser("ff63").build();
-    	System.out.println(capsBuilder.caps);
+    public static void main(String[] args) throws Exception{
 
 
     	Builders builder = new Builders();
     	builder.login("patrick.richardson%40smartbear.com", "u6752ef1109dd271");
+
+      //Build the caps for our driver
+      CapsBuilder capsBuilder = new CapsBuilder(builder.username, builder.authkey);
+      capsBuilder.withPlatform("Windows 8").withBuild("1.0").withBrowser("ff63").build();
+      System.out.println(capsBuilder.caps);
+
     	RemoteWebDriver driver = new RemoteWebDriver(new URL("http://" + builder.username + ":" + builder.authkey + "@hub.crossbrowsertesting.com:80/wd/hub"),capsBuilder.caps);
       
       //initialize an AutomatedTest object with our selnium session id

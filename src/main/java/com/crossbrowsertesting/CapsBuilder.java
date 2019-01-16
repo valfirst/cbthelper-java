@@ -1,3 +1,4 @@
+package com.crossbrowsertesting;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,8 +19,8 @@ import org.json.JSONObject;
  * Builder for generating selenium capabilities
  */
 public class CapsBuilder {
-    String gUsername = "patrick.richardson@smartbear.com";
-    String gAuthkey  = "u6752ef1109dd271";
+    String gUsername;
+    String gAuthkey;
     String api = "https://crossbrowsertesting.com/api/v3/selenium/";
     String hub = "http://hub.crossbrowsertesting.com:80/wd/hub";
 
@@ -28,8 +29,9 @@ public class CapsBuilder {
     String platform=null, browser=null, width=null, height=null, name=null, version=null, resolution=null;
     boolean recordVideo=false, recordNetwork=false;
     
-    public CapsBuilder() throws UnirestException { //constructor
-        //finish this
+    public CapsBuilder(String username, String authkey) throws UnirestException { //constructor
+        gUsername = username;
+        gAuthkey = authkey;
         HttpResponse<JsonNode> response = Unirest.get("http://crossbrowsertesting.com/api/v3/selenium/browsers")
             .basicAuth(gUsername, gAuthkey)
             .asJson();
