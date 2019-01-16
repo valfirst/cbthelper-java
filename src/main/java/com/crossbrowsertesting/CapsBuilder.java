@@ -24,7 +24,7 @@ public class CapsBuilder {
     String api = "https://crossbrowsertesting.com/api/v3/selenium/";
     String hub = "http://hub.crossbrowsertesting.com:80/wd/hub";
 
-    DesiredCapabilities caps = new DesiredCapabilities();
+    public DesiredCapabilities caps = new DesiredCapabilities();
     JSONArray capsData;
     String platform=null, browser=null, width=null, height=null, name=null, version=null, resolution=null;
     boolean recordVideo=false, recordNetwork=false;
@@ -38,6 +38,7 @@ public class CapsBuilder {
         this.capsData = response.getBody().getArray();
 
     }
+
     /**
      * Used to generate the capabilites using any options the user specifies
      * 
