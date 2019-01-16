@@ -23,7 +23,7 @@ public class Main {
 
 
     	Builders builder = new Builders();
-    	builder.login("patrick.richardson%40smartbear.com", "u6752ef1109dd271");
+    	builder.login("your-username", "your-authkey");
 
       //Build the caps for our driver
       CapsBuilder capsBuilder = new CapsBuilder(builder.username, builder.authkey);
