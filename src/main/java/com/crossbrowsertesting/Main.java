@@ -15,10 +15,6 @@ import java.net.URL;
  */
 
 public class Main {
-    static String username = ""; // Your username
-    static String authkey = "12345";  // Your authkey
-    String testScore = "unset";
-
     public static void main(String[] args) throws Exception{
 
 
@@ -55,6 +51,7 @@ public class Main {
       video.setDescription("google and cbt video");
       video.stopRecording();
 
+
       //set a score for our test and end it
       myTest.setScore("pass");
       myTest.stop();
@@ -62,5 +59,6 @@ public class Main {
       //save our video
       video.saveLocally("test/myvideo.mp4");
 
+      myTest.saveAllSnapshots("test/", true);
     }
 }

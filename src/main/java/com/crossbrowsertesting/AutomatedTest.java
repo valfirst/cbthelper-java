@@ -131,8 +131,9 @@ public class AutomatedTest {
         return videos;
     }
 
-    public void saveAllSnapshots(String directory, String prefix, boolean useDescription) throws UnirestException {
+    public void saveAllSnapshots(String directory, boolean useDescription) throws UnirestException, Exception {
         //FileUtils.copyURLToFile(URL, File);
+        String prefix = "image";
         String filename;
         int count = 0;
         
@@ -140,31 +141,32 @@ public class AutomatedTest {
         
         Snapshot[] snaps = this.getSnapshots();
         for (Snapshot snap : snaps) {
-            if(useDescription && snap.info.getObject().getString("description").equals("")) {
+            if(useDescription && !(snap.info.getObject().getString("description").equals(""))) {
                 filename = snap.info.getObject().getString("description") + ".png";
             } else {
                 filename = prefix + Integer.toString(count) + ".png";
             }
-        //pass directory + filename via snap.saveLocally(combo);
-        count++;
+            snap.saveLocally(directory+filename);
+            count++;
         }
     }
     
-    public void saveAllVideos(String directory, String prefix, boolean useDescription) throws UnirestException {
+    public void saveAllVideos(String directory, boolean useDescription) throws UnirestException, Exception {
+        String prefix = "video";
         String filename;
         int count = 0;
         
-        //verify directory here
+        //verify directory heres
         
         Video[] videos = this.getVideos();
         for (Video vid : videos) {
-            if(useDescription && vid.info.getObject().getString("description").equals("")) {
+            if(useDescription && !(vid.info.getObject().getString("description").equals(""))) {
                 filename = vid.info.getObject().getString("description") + ".mp4";
             } else {
                 filename = prefix + Integer.toString(count) + ".mp4";
             }
-        //pass directory + filename via vid.saveLocally(combo);
-        count++;
+            vid.saveLocally(directory+filename);
+            count++;
         }
     }
 }

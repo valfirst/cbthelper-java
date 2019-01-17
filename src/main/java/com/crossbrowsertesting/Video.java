@@ -85,15 +85,16 @@ class VideoThread extends Thread {
             try {
                 try{
                     Thread.sleep(3000); //if you attempt to save DIRECTLY after taking picture/video amazon doesn't see it yet.
-                }
-                catch(InterruptedException ex)
-                {
+                } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
                 FileUtils.copyURLToFile(this.video_url, this.video_file);
                 break;
             } catch (IOException ex) {
                 iteration = iteration + 1;
+                if(iteration == 10){
+                    System.out.println("Still looking for video");
+                }
                 //Logger.getLogger(SnapThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -103,6 +104,6 @@ class VideoThread extends Thread {
     public void start() {
         System.out.println("Downloading video from " + video_url.toString());
         t = new Thread(this);
-        t.run();
+        t.start();
     }
 }

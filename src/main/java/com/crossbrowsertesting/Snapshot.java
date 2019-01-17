@@ -87,6 +87,6 @@ class SnapThread extends Thread {
     public void start() {
         System.out.println("Downloading snapshot from " + snap_url.toString());
         t = new Thread(this);
-        t.run();
+        t.start();
     }
 }
