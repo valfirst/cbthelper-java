@@ -59,6 +59,7 @@ public class Main {
       //save our video
       video.saveLocally("test/myvideo.mp4");
 
+      //save all snapshots taken during test
       myTest.saveAllSnapshots("test/", true);
     }
 }
