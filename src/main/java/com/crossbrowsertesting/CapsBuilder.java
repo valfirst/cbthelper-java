@@ -186,11 +186,11 @@ public class CapsBuilder {
         }
 
         if(this.recordVideo){
-            this.caps.setCapability("record_video", this.version);
+            this.caps.setCapability("record_video", this.recordVideo);
         }
 
         if(this.recordNetwork){
-            this.caps.setCapability("record_network", this.version);
+            this.caps.setCapability("record_network", this.recordNetwork);
         }
         return this.caps;
     }
